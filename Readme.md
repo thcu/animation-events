@@ -2,8 +2,8 @@
 # animation-events
 
   css animation events name prefixed if needed
-  
-  based on the following asomption:
+
+  based on the following assumption:
   unprefixed css property --> unprefixed css event
 
 ## Installation
