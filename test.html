@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<style>
+		* {
+			border: 0px;
+			margin: 0;
+			padding: 0;
+		}
+		html, body {
+			width: 100%;
+			height: 100%;
+		}
+		body {
+			display: table;
+		}
+		.main {
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+		}
+		.ball {
+			display: inline-block;
+			width: 50px; height: 50px; border-radius: 25px; background: red;
+			-webkit-transform: scale(0);
+			-moz-transform: scale(0);
+			-o-transform: scale(0);
+			-ms-transform: scale(0);
+			transform: scale(0);
+			-webkit-transition: all 2s;
+			-moz-transition: all 2s;
+			-o-transition: all 2s;
+			-ms-transition: all 2s;
+			transition: all 2s;
+		}
+		.wrapper {
+			z-index: 11;
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			width: 20%;
+			padding: 20px;
+			background: rgba(255,255,255,0.8);
+			overflow: auto;
+			-webkit-transition: all 0.3s;
+		}
+		#animation {
+			width: 100%;
+			background: black;
+			color: white;
+			font-size: 20px;
+			padding: 10px;
+			border-radius: 5px;
+			margin-bottom: 20px;
+		}
+		.evt {
+			margin-bottom: 20px;
+		}
+		.ball.anim {
+			-webkit-animation-name: scale;
+			-moz-animation-name: scale;
+			-o-animation-name: scale;
+			animation-name: scale;
+			-webkit-animation-duration: 2s;
+			-moz-animation-duration: 2s;
+			-o-animation-duration: 2s;
+			animation-duration: 2s;
+			-webkit-animation-iteration-count: infinite;
+			-moz-animation-iteration-count: infinite;
+			-o-animation-iteration-count: infinite;
+			animation-iteration-count: infinite;
+			-webkit-animation-fill-mode: both;
+			-moz-animation-fill-mode: both;
+			-o-animation-fill-mode: both;
+			animation-fill-mode: both;
+		}
+		@-webkit-keyframes scale {
+			from, to {
+				-webkit-transform: scale(0);		
+			}
+			50% {
+				-webkit-transform: scale(12);
+			}
+		}
+		@-moz-keyframes scale {
+			from, to {
+				-moz-transform: scale(0);
+			}
+			50% {
+				-moz-transform: scale(12);
+			}
+		}
+		@-o-keyframes scale {
+			from, to {
+				-o-transform: scale(0);
+			}
+			50% {
+				-o-transform: scale(12);
+			}
+		}
+		@keyframes scale {
+			from, to {
+				transform: scale(0);		
+			}
+			50% {
+				transform: scale(12);		
+			}
+		}
+
+	</style>
+	<body>
+
+		<div class="wrapper">
+			<button id="animation">start animation</button>
+			<p class="evt"></p>
+			<div class="status"></div>
+		</div>
+
+		<div class="main">
+			<div class="ball"></div>
+		</div>
+		
+		<script src="build/build.js"></script>
+		<script>
+
+			window.addEventListener('DOMContentLoaded', function (evt) {
+
+				var e = require('animation-events');
+
+				var animation = document.querySelector('#animation')
+				    , ball = document.querySelector('.ball')
+				    , evt = document.querySelector('.evt')
+				    , status = document.querySelector('.status')
+				    ;
+
+				 evt.textContent = ' current browser animationstart event name : ' + e('animationstart') + ' / animationiteration event name : ' + e('animationiteration') + ' / animationend event name : ' + e('animationend');
+
+				 animation.addEventListener('click', function () {
+				 	ball.classList.toggle('anim');
+				 	ball.classList.contains('anim')
+				 		? animation.textContent = "stop animation"
+				 		: animation.textContent = "start animation"
+				 		;
+				 }, false);
+			
+				ball.addEventListener(e('animationstart'), function() {
+					var p = document.createElement('p');
+					p.textContent = ' - animation start event fired';
+					status.appendChild(p);
+				}, false);
+
+				ball.addEventListener(e('animationiteration'), function() {
+					var p = document.createElement('p');
+					p.textContent = ' - animation iteration event fired';
+					status.appendChild(p);
+				}, false);
+
+				ball.addEventListener(e('animationend'), function() {
+					var p = document.createElement('p');
+					p.textContent = ' - animation end event fired';
+					status.appendChild(p);
+				}, false);
+
+			})
+
+			
+		</script>
+	</body>
+</html>

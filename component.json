@@ -1,0 +1,14 @@
+{
+  "name": "animation-events",
+  "repo": "thcu/animation-events",
+  "description": "css animation events name prefixed if needed",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    "index.js"
+  ]
+}
