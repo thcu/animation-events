@@ -24,13 +24,13 @@ var prefixes = ['o', 'MS', 'moz', 'webkit']
  */
 
 function animationEventName (name) {
-	if (noPrefix) return name;
-	camelCaseEvent = animationEvents[name];
-	for (var i = prefixes.length - 1; i >= 0; i--) {
-		if (testNode.style['-' + prefixes[i].toLowerCase() + '-' + styleProperty] != undefined) {
-			return prefixes[i] + animationEvents[name];
-		};
-	};
+    if (noPrefix) return name;
+    camelCaseEvent = animationEvents[name];
+    for (var i = prefixes.length - 1; i >= 0; i--) {
+        if (testNode.style['-' + prefixes[i].toLowerCase() + '-' + styleProperty] != undefined) {
+            return prefixes[i] + animationEvents[name];
+        };
+    };
 };
 
 /**
