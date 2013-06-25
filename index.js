@@ -1,19 +1,33 @@
+
 /**
- * @var {Array} prefixes - events prefixes (reverse order of preference due to reverse loop...)
- * @var {Object} animationEvents - map native event name to its unprefixed CamalCased counterpart
- * @var {String} styleProperty - style property to test on element
- * @var {Element} testNode - clean element to test prop on
- * @var {Boolean} noprefix - check if prefix is needed
- * @var {String} camelCaseEvent - reference to animationEvents[@param name]
+ * expose
  */
 
-var prefixes = ['o', 'MS', 'moz', 'webkit']
-    , animationEvents = { 'animationstart': 'AnimationStart', 'animationiteration': 'AnimationIteration', 'animationend': 'AnimationEnd' }
-    , styleProperty = 'animation'
-    , testNode = document.createElement('p')
-    , noPrefix = testNode.style[styleProperty] != undefined
-    , camelCaseEvent
-    ;
+module.exports = animationEventName;
+
+/**
+ *
+ */
+
+var animationEvents = { 'animationstart': 'AnimationStart', 'animationiteration': 'AnimationIteration', 'animationend': 'AnimationEnd' }
+  , testNode = document.createElement('p')
+  , testProperty = 'animation'
+  , needPrefix = testNode.style[testProperty] == undefined
+  , prefixes = ['o', 'MS', 'moz', 'webkit']
+  , prefix = getPrefix()
+  ;
+
+/**
+ * return the prefix for animation
+ */
+
+function getPrefix() {
+    for (var i = prefixes.length - 1; i >= 0; i--) {
+        if (testNode.style['-' + prefixes[i].toLowerCase() + '-' + testProperty] != undefined) {
+            return prefixes[i];                
+        };
+    };
+};
 
 /**
  * prefix animation event name if needed
@@ -24,17 +38,8 @@ var prefixes = ['o', 'MS', 'moz', 'webkit']
  */
 
 function animationEventName (name) {
-    if (noPrefix) return name;
-    camelCaseEvent = animationEvents[name];
-    for (var i = prefixes.length - 1; i >= 0; i--) {
-        if (testNode.style['-' + prefixes[i].toLowerCase() + '-' + styleProperty] != undefined) {
-            return prefixes[i] + animationEvents[name];
-        };
-    };
+    return needPrefix
+        ? prefix + animationEvents[name]
+        : name
+        ;
 };
-
-/**
- * expose
- */
-
-module.exports = animationEventName;
